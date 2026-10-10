@@ -255,164 +255,101 @@ body {
 .ring-3 { width: 350px; height: 350px; border-color: var(--purple); border-style: dashed; animation-duration: 25s; }
 @keyframes ring-spin { 100% { transform: rotate(360deg); } }
 
-/* ===== 3RD EYE BLINKING LENS ===== */
-.third-eye-container {
+/* ===== NATURAL AVATAR EYES BLINKING SYSTEM ===== */
+.avatar-eyes-system {
     position: absolute;
-    top: 27%; /* Exact Forehead coordinate */
-    left: 50.5%;
-    transform: translate(-50%, -50%);
-    width: 42px;
-    height: 28px;
-    z-index: 20;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.third-eye-container:hover {
-    transform: translate(-50%, -50%) scale(1.25);
+    pointer-events: auto;
 }
 
-/* Aura glow behind 3rd eye */
-.eye-energy-aura {
+/* Individual Eye Containers matching 3D Avatar Face Position */
+.avatar-eye {
     position: absolute;
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.9) 0%, rgba(108, 99, 255, 0.5) 45%, transparent 75%);
-    filter: blur(5px);
-    animation: eye-aura-pulse 2.2s infinite alternate ease-in-out;
-    pointer-events: none;
-}
-@keyframes eye-aura-pulse {
-    0% { transform: scale(0.85); opacity: 0.6; }
-    100% { transform: scale(1.35); opacity: 1; }
-}
-
-/* Rotating holographic rune ring */
-.eye-rune-ring {
-    position: absolute;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    border: 1px dashed rgba(0, 212, 255, 0.7);
-    box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
-    animation: rune-spin 8s linear infinite;
-    pointer-events: none;
-}
-@keyframes rune-spin { 100% { transform: rotate(360deg); } }
-
-/* Eye Socket - Almond shape */
-.eye-socket {
-    position: relative;
-    width: 32px; height: 18px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    background: #050718;
-    border: 1.5px solid rgba(0, 212, 255, 0.95);
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.8), inset 0 0 10px rgba(108, 99, 255, 0.9);
+    width: 26px; height: 16px;
+    border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
     overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-}
-.eye-ball {
-    width: 100%; height: 100%;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-}
-.eye-iris {
-    width: 15px; height: 15px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffffff 15%, #00d4ff 45%, #6c63ff 80%, #0a052e 100%);
-    box-shadow: 0 0 10px #00d4ff;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.15s ease-out;
-}
-.eye-pupil {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #020412;
-    box-shadow: 0 0 4px #000;
-}
-.eye-core-glow {
-    position: absolute;
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: #00ffff;
-    box-shadow: 0 0 6px #00ffff;
-}
-.eye-glint {
-    position: absolute; top: 2px; right: 2px;
-    width: 3px; height: 3px;
-    background: #ffffff; border-radius: 50%;
-    opacity: 0.9;
+    pointer-events: none;
 }
 
-/* Eyelids for realistic snappy blink */
-.eye-lid {
-    position: absolute; left: 0; right: 0;
-    background: linear-gradient(180deg, #181938, #0a0b1e);
-    border-color: rgba(0, 212, 255, 0.8);
-    transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 5; pointer-events: none;
+/* Left Eye (viewer's left) */
+.avatar-eye.eye-left {
+    top: 37.0%;
+    left: 45.4%;
+    transform: translate(-50%, -50%) rotate(2deg);
 }
-.eye-lid-top {
-    top: 0; height: 53%;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.8);
+
+/* Right Eye (viewer's right) */
+.avatar-eye.eye-right {
+    top: 37.8%;
+    left: 58.6%;
+    transform: translate(-50%, -50%) rotate(-2deg);
+}
+
+/* Realistic 3D Upper Eyelid with natural skin-tone matching avatar */
+.avatar-eyelid-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, #bd855d 0%, #a86f4a 70%, #3a2012 100%);
+    border-bottom: 2px solid #24130a; /* natural eyelash edge */
+    box-shadow: inset 0 -1px 3px rgba(0, 0, 0, 0.45);
     transform-origin: top;
-    transform: translateY(-100%);
-}
-.eye-lid-bottom {
-    bottom: 0; height: 53%;
-    border-top: 1px solid rgba(0, 212, 255, 0.8);
-    transform-origin: bottom;
-    transform: translateY(100%);
+    transform: translateY(-105%);
+    transition: transform 0.11s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+    border-radius: 50% 50% 0 0;
 }
 
-/* BLINK ANIMATION TRIGGERED BY CLASS */
-.third-eye-container.blinking .eye-lid-top { transform: translateY(0); }
-.third-eye-container.blinking .eye-lid-bottom { transform: translateY(0); }
+/* Eye glint on cornea */
+.avatar-eye-glint {
+    position: absolute; top: 2px; right: 5px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    filter: blur(0.5px); opacity: 0.85;
+    pointer-events: none;
+}
 
-/* Pulse wave emitted when blinking */
-.eye-laser-pulse {
-    position: absolute;
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    border: 2px solid #00d4ff;
+/* Optical neural shimmer on blink reopen */
+.avatar-eye-flash {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.75) 0%, transparent 80%);
     opacity: 0; pointer-events: none;
 }
-.third-eye-container.blinking .eye-laser-pulse {
-    animation: laser-pulse-out 0.45s ease-out;
-}
-@keyframes laser-pulse-out {
-    0% { transform: scale(1); opacity: 1; border-color: #00ffff; }
-    100% { transform: scale(3.8); opacity: 0; border-color: #a855f7; }
+
+/* BLINK STATE - BOTH EYES BLINK TOGETHER NATURALLY */
+.avatar-eyes-system.blinking .avatar-eyelid-top {
+    transform: translateY(0%);
 }
 
-/* Holographic scan beam */
-.eye-scan-cone {
+.avatar-eyes-system.blinking .avatar-eye-flash {
+    animation: eye-reopen-flash 0.4s ease-out;
+}
+@keyframes eye-reopen-flash {
+    0% { opacity: 0; }
+    50% { opacity: 0.85; }
+    100% { opacity: 0; }
+}
+
+/* Holographic aura pulse when avatar blinks */
+.avatar-vision-pulse {
     position: absolute;
     top: 50%; left: 50%;
-    width: 200px; height: 240px;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.35) 0%, rgba(108, 99, 255, 0.08) 50%, transparent 100%);
-    clip-path: polygon(0 0, 100% 30%, 80% 100%);
-    transform-origin: 0 0;
-    transform: rotate(35deg);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-    filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6));
+    transform: translate(-50%, -50%);
+    width: 270px; height: 270px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 212, 255, 0.55);
+    opacity: 0; pointer-events: none;
 }
-.third-eye-container.blinking .eye-scan-cone { opacity: 1; }
-
-.third-eye-label {
-    position: absolute; bottom: -20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem; font-weight: 700;
-    color: var(--cyan);
-    background: rgba(6, 8, 24, 0.9);
-    border: 1px solid rgba(0, 212, 255, 0.5);
-    padding: 2px 7px; border-radius: 4px;
-    white-space: nowrap; letter-spacing: 0.5px;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.35);
+.avatar-eyes-system.blinking .avatar-vision-pulse {
+    animation: avatar-pulse-burst 0.5s ease-out;
+}
+@keyframes avatar-pulse-burst {
+    0% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.9; border-color: #00d4ff; }
+    100% { transform: translate(-50%, -50%) scale(1.18); opacity: 0; border-color: #a855f7; }
 }
 
 /* ===== HOLOGRAPHIC AVATAR HUD MODULE ===== */

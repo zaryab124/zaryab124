@@ -94,24 +94,21 @@
                         <!-- 3D AVATAR IMAGE -->
                         <img src="avatar.jpg" alt="Muhammad Zaryab Hassan - 3D Avatar" class="avatar-image" id="avatarImg">
                         
-                        <!-- CYBERNETIC 3RD EYE OVERLAY -->
-                        <div class="third-eye-container" id="thirdEyeContainer" title="Click to Blink 3rd Eye & Trigger Next Module">
-                            <div class="eye-energy-aura"></div>
-                            <div class="eye-rune-ring"></div>
-                            <div class="eye-socket">
-                                <div class="eye-ball">
-                                    <div class="eye-iris" id="eyeIris">
-                                        <div class="eye-pupil" id="eyePupil"></div>
-                                        <div class="eye-core-glow"></div>
-                                        <div class="eye-glint"></div>
-                                    </div>
-                                </div>
-                                <div class="eye-lid eye-lid-top" id="eyeLidTop"></div>
-                                <div class="eye-lid eye-lid-bottom" id="eyeLidBottom"></div>
+                        <!-- AVATAR NATURAL BLINKING EYES SYSTEM -->
+                        <div class="avatar-eyes-system" id="avatarEyesSystem" title="Click Avatar to Blink & Cycle Modules">
+                            <!-- Left Eye (viewer's left) -->
+                            <div class="avatar-eye eye-left" id="eyeLeft">
+                                <div class="avatar-eyelid-top"></div>
+                                <div class="avatar-eye-glint"></div>
+                                <div class="avatar-eye-flash"></div>
                             </div>
-                            <div class="eye-laser-pulse" id="eyeLaserPulse"></div>
-                            <div class="eye-scan-cone" id="eyeScanCone"></div>
-                            <span class="third-eye-label"><i class="fas fa-eye"></i> 3RD EYE</span>
+                            <!-- Right Eye (viewer's right) -->
+                            <div class="avatar-eye eye-right" id="eyeRight">
+                                <div class="avatar-eyelid-top"></div>
+                                <div class="avatar-eye-glint"></div>
+                                <div class="avatar-eye-flash"></div>
+                            </div>
+                            <div class="avatar-vision-pulse" id="avatarVisionPulse"></div>
                         </div>
 
                         <!-- FLOATING TECH BADGES -->
@@ -126,13 +123,13 @@
                         </div>
                     </div>
 
-                    <!-- HOLOGRAPHIC AVATAR HUD MODULE (CYCLED BY 3RD EYE BLINK) -->
+                    <!-- HOLOGRAPHIC AVATAR HUD MODULE (CYCLED BY AVATAR BLINK) -->
                     <div class="avatar-hud-module" id="avatarHudModule">
                         <div class="hud-scanner-line" id="hudScannerLine"></div>
                         <div class="hud-header">
                             <div class="hud-status">
                                 <span class="hud-live-dot"></span>
-                                <span class="hud-status-text"><i class="fas fa-eye"></i> NEURAL VISION</span>
+                                <span class="hud-status-text"><i class="fas fa-eye"></i> AVATAR VISION</span>
                             </div>
                             <div class="hud-controls">
                                 <span class="hud-scan-counter" id="hudScanCounter">MODULE #1/5</span>
@@ -147,7 +144,7 @@
                                 <span class="hud-achievement-badge" id="hudAchievementBadge">
                                     <i class="fas fa-trophy"></i> ACHIEVEMENT UNLOCKED
                                 </span>
-                                <span class="hud-time-tag" id="hudTimeTag">AUTO-SCAN 4s</span>
+                                <span class="hud-time-tag" id="hudTimeTag">AUTO-SCAN 4.5s</span>
                             </div>
                             <h3 class="hud-title" id="hudTitle">Impact-StudyAgent AI</h3>
                             <div class="hud-category" id="hudCategory">🤖 Autonomous Tutoring Agent</div>
@@ -179,7 +176,7 @@
                         <!-- BLINK TRIGGER BAR -->
                         <div class="hud-footer">
                             <button class="hud-blink-now-btn" id="hudBlinkBtn">
-                                <i class="fas fa-eye"></i> <span>Blink 3rd Eye (Next Module)</span>
+                                <i class="fas fa-eye"></i> <span>Blink Avatar Eyes (Next Module)</span>
                             </button>
                             <div class="hud-progress-track">
                                 <div class="hud-progress-bar" id="hudProgressBar"></div>

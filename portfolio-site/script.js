@@ -195,11 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ===============================================================
-       5. 3RD EYE BLINKING & DYNAMIC MODULE SYSTEM (CORE FEATURE)
+       5. AVATAR NATURAL EYES BLINKING & DYNAMIC MODULE SYSTEM
        =============================================================== */
-    const thirdEyeContainer = document.getElementById('thirdEyeContainer');
-    const eyeIris = document.getElementById('eyeIris');
-    const eyePupil = document.getElementById('eyePupil');
+    const avatarEyesSystem = document.getElementById('avatarEyesSystem');
+    const avatarContainer = document.getElementById('avatarContainer');
 
     // HUD Elements
     const hudModuleBody = document.getElementById('hudModuleBody');
@@ -312,12 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
             osc.type = 'sine';
             const now = audioCtx.currentTime;
 
-            // Futuristic optic chirp frequency glide
-            osc.frequency.setValueAtTime(880, now);
-            osc.frequency.exponentialRampToValueAtTime(1760, now + 0.08);
-            osc.frequency.exponentialRampToValueAtTime(1174, now + 0.16);
+            // Futuristic gentle optic chirp frequency glide
+            osc.frequency.setValueAtTime(740, now);
+            osc.frequency.exponentialRampToValueAtTime(1480, now + 0.08);
+            osc.frequency.exponentialRampToValueAtTime(1108, now + 0.16);
 
-            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.setValueAtTime(0.05, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
 
             osc.connect(gain);
@@ -346,34 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3rd Eye Pupil tracking cursor
-    window.addEventListener('mousemove', (e) => {
-        if (!thirdEyeContainer || !eyeIris) return;
-        const rect = thirdEyeContainer.getBoundingClientRect();
-        const eyeCenterX = rect.left + rect.width / 2;
-        const eyeCenterY = rect.top + rect.height / 2;
+    // Avatar Natural Eyes Blink & Module Advance Function
+    function triggerAvatarBlink(targetIndex = null) {
+        if (!avatarEyesSystem) return;
 
-        const deltaX = e.clientX - eyeCenterX;
-        const deltaY = e.clientY - eyeCenterY;
-        const angle = Math.atan2(deltaY, deltaX);
-
-        // Distance dampening (max 3px pupil shift)
-        const distance = Math.min(Math.hypot(deltaX, deltaY) / 100, 3.2);
-        const shiftX = Math.cos(angle) * distance;
-        const shiftY = Math.sin(angle) * distance;
-
-        eyeIris.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
-    });
-
-    // 3rd Eye Blink & Module Advance Function
-    function triggerThirdEyeBlink(targetIndex = null) {
-        if (!thirdEyeContainer) return;
-
-        // 1. Play sound
+        // 1. Play optic chirp
         playSciFiChirp();
 
-        // 2. Add blinking class to close eyelids & emit laser scan pulse
-        thirdEyeContainer.classList.add('blinking');
+        // 2. Both eyelids drop down and snap open (natural human blink)
+        avatarEyesSystem.classList.add('blinking');
 
         // 3. Fade out current module content
         if (hudModuleBody) hudModuleBody.classList.add('updating');
@@ -408,12 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Restore module visibility
             if (hudModuleBody) hudModuleBody.classList.remove('updating');
-        }, 140);
+        }, 130);
 
-        // 6. Eyelids snap open
+        // 6. Eyelids snap open after natural duration
         setTimeout(() => {
-            thirdEyeContainer.classList.remove('blinking');
-        }, 340);
+            avatarEyesSystem.classList.remove('blinking');
+        }, 260);
 
         // Reset progress bar animation
         resetProgressTimer();
@@ -439,25 +419,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (elapsed >= AUTO_BLINK_TIME) {
-                triggerThirdEyeBlink();
+                triggerAvatarBlink();
             }
         }, 50);
     }
     startProgressLoop();
 
-    // Event: Click on 3rd Eye directly triggers blink & next module
-    if (thirdEyeContainer) {
-        thirdEyeContainer.addEventListener('click', (e) => {
+    // Event: Click directly on avatar to trigger natural blink
+    if (avatarEyesSystem) {
+        avatarEyesSystem.addEventListener('click', (e) => {
             e.preventDefault();
-            triggerThirdEyeBlink();
+            triggerAvatarBlink();
         });
     }
 
-    // Event: Click on "Blink 3rd Eye" button
+    if (avatarContainer) {
+        avatarContainer.addEventListener('click', (e) => {
+            triggerAvatarBlink();
+        });
+    }
+
+    // Event: Click on "Blink Avatar Eyes" button in HUD
     if (hudBlinkBtn) {
         hudBlinkBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            triggerThirdEyeBlink();
+            triggerAvatarBlink();
         });
     }
 
