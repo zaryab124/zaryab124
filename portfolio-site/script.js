@@ -347,13 +347,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Avatar Natural Eyes Blink & Module Advance Function
     function triggerAvatarBlink(targetIndex = null) {
-        if (!avatarEyesSystem) return;
+        if (!avatarContainer) return;
 
-        // 1. Play optic chirp
+        // 1. Play subtle audio chirp
         playSciFiChirp();
 
-        // 2. Both eyelids drop down and snap open (natural human blink)
-        avatarEyesSystem.classList.add('blinking');
+        // 2. Seamlessly close the avatar's actual face eyes
+        avatarContainer.classList.add('blinking');
 
         // 3. Fade out current module content
         if (hudModuleBody) hudModuleBody.classList.add('updating');
@@ -388,12 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Restore module visibility
             if (hudModuleBody) hudModuleBody.classList.remove('updating');
-        }, 130);
+        }, 120);
 
-        // 6. Eyelids snap open after natural duration
+        // 6. Avatar eyes naturally reopen after blink
         setTimeout(() => {
-            avatarEyesSystem.classList.remove('blinking');
-        }, 260);
+            avatarContainer.classList.remove('blinking');
+        }, 180);
 
         // Reset progress bar animation
         resetProgressTimer();
@@ -425,14 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     startProgressLoop();
 
-    // Event: Click directly on avatar to trigger natural blink
-    if (avatarEyesSystem) {
-        avatarEyesSystem.addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerAvatarBlink();
-        });
-    }
-
+    // Event: Click directly on avatar face to trigger natural blink
     if (avatarContainer) {
         avatarContainer.addEventListener('click', (e) => {
             triggerAvatarBlink();

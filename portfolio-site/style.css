@@ -229,16 +229,35 @@ body {
 }
 
 .avatar-container {
-    position: relative; width: 340px; height: 340px;
+    position: relative; width: 280px; height: 280px;
     display: flex; justify-content: center; align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
 }
 .avatar-image {
-    width: 260px; height: 260px;
+    width: 280px; height: 280px;
     border-radius: 50%; object-fit: cover;
-    position: relative; z-index: 3;
+    position: absolute; top: 0; left: 0;
     border: 3px solid var(--glass-border);
-    box-shadow: 0 0 60px var(--accent-glow), 0 0 100px rgba(0, 212, 255, 0.15);
+    box-shadow: 0 0 50px var(--accent-glow), 0 0 100px rgba(0, 212, 255, 0.15);
     animation: float 6s ease-in-out infinite;
+    transition: opacity 0.08s ease;
+}
+.avatar-open {
+    z-index: 3;
+    opacity: 1;
+}
+.avatar-closed {
+    z-index: 4;
+    opacity: 0;
+    pointer-events: none;
+}
+/* REAL FACE EYES BLINKING STATE */
+.avatar-container.blinking .avatar-closed {
+    opacity: 1;
+}
+.avatar-container.blinking .avatar-open {
+    opacity: 0;
 }
 @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -246,111 +265,15 @@ body {
 }
 .avatar-ring {
     position: absolute;
-    width: 300px; height: 300px;
+    width: 320px; height: 320px;
     border: 2px solid var(--accent);
     border-radius: 50%; opacity: 0.2;
     animation: ring-spin 15s linear infinite;
+    pointer-events: none;
 }
-.ring-2 { width: 330px; height: 330px; border-color: var(--cyan); animation-duration: 20s; animation-direction: reverse; }
-.ring-3 { width: 350px; height: 350px; border-color: var(--purple); border-style: dashed; animation-duration: 25s; }
+.ring-2 { width: 350px; height: 350px; border-color: var(--cyan); animation-duration: 20s; animation-direction: reverse; }
+.ring-3 { width: 370px; height: 370px; border-color: var(--purple); border-style: dashed; animation-duration: 25s; }
 @keyframes ring-spin { 100% { transform: rotate(360deg); } }
-
-/* ===== NATURAL AVATAR EYES BLINKING SYSTEM ===== */
-.avatar-eyes-system {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 10;
-    cursor: pointer;
-    pointer-events: auto;
-}
-
-/* Individual Eye Containers matching 3D Avatar Face Position */
-.avatar-eye {
-    position: absolute;
-    width: 26px; height: 16px;
-    border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-/* Left Eye (viewer's left) */
-.avatar-eye.eye-left {
-    top: 37.0%;
-    left: 45.4%;
-    transform: translate(-50%, -50%) rotate(2deg);
-}
-
-/* Right Eye (viewer's right) */
-.avatar-eye.eye-right {
-    top: 37.8%;
-    left: 58.6%;
-    transform: translate(-50%, -50%) rotate(-2deg);
-}
-
-/* Realistic 3D Upper Eyelid with natural skin-tone matching avatar */
-.avatar-eyelid-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 100%;
-    background: linear-gradient(180deg, #bd855d 0%, #a86f4a 70%, #3a2012 100%);
-    border-bottom: 2px solid #24130a; /* natural eyelash edge */
-    box-shadow: inset 0 -1px 3px rgba(0, 0, 0, 0.45);
-    transform-origin: top;
-    transform: translateY(-105%);
-    transition: transform 0.11s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 3;
-    border-radius: 50% 50% 0 0;
-}
-
-/* Eye glint on cornea */
-.avatar-eye-glint {
-    position: absolute; top: 2px; right: 5px;
-    width: 4px; height: 4px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    filter: blur(0.5px); opacity: 0.85;
-    pointer-events: none;
-}
-
-/* Optical neural shimmer on blink reopen */
-.avatar-eye-flash {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100%; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 212, 255, 0.75) 0%, transparent 80%);
-    opacity: 0; pointer-events: none;
-}
-
-/* BLINK STATE - BOTH EYES BLINK TOGETHER NATURALLY */
-.avatar-eyes-system.blinking .avatar-eyelid-top {
-    transform: translateY(0%);
-}
-
-.avatar-eyes-system.blinking .avatar-eye-flash {
-    animation: eye-reopen-flash 0.4s ease-out;
-}
-@keyframes eye-reopen-flash {
-    0% { opacity: 0; }
-    50% { opacity: 0.85; }
-    100% { opacity: 0; }
-}
-
-/* Holographic aura pulse when avatar blinks */
-.avatar-vision-pulse {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 270px; height: 270px;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 212, 255, 0.55);
-    opacity: 0; pointer-events: none;
-}
-.avatar-eyes-system.blinking .avatar-vision-pulse {
-    animation: avatar-pulse-burst 0.5s ease-out;
-}
-@keyframes avatar-pulse-burst {
-    0% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.9; border-color: #00d4ff; }
-    100% { transform: translate(-50%, -50%) scale(1.18); opacity: 0; border-color: #a855f7; }
-}
 
 /* ===== HOLOGRAPHIC AVATAR HUD MODULE ===== */
 .avatar-hud-module {
@@ -535,28 +458,6 @@ body {
     width: 0%; height: 100%;
     background: linear-gradient(90deg, #6c63ff, #00d4ff);
     transition: width 0.1s linear;
-}
-    display: flex; align-items: center; gap: 6px;
-    backdrop-filter: blur(10px);
-    animation: float 4s ease-in-out infinite;
-}
-.badge-ai {
-    top: 30px; right: 20px;
-    background: rgba(108, 99, 255, 0.2);
-    border: 1px solid rgba(108, 99, 255, 0.4);
-    color: var(--accent); animation-delay: 0s;
-}
-.badge-code {
-    bottom: 40px; left: 10px;
-    background: rgba(0, 212, 255, 0.15);
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    color: var(--cyan); animation-delay: 1s;
-}
-.badge-rocket {
-    top: 60%; right: -10px;
-    background: rgba(168, 85, 247, 0.15);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    color: var(--purple); animation-delay: 2s;
 }
 
 /* ===== SCROLL INDICATOR ===== */
